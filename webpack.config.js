@@ -1,12 +1,32 @@
 const path = require('path');
 
 module.exports = {
-    // entry specifies the entry file where the bundler starts the bundling process
-    entry: './client/index.js',
+  entry: './client/index.js',
+  output: {
+    path: path.resolve('dist'),
+    filename: 'index_bundle.js'
+  },
 
-    // output specifies place where the bundles js code is to be saved
-    output:{
-        path:path.resolve('dist'),
-        filename: 'index_bundle.js'
-    }
+  module: {
+    rules: [
+      { test: /\.css$/,
+        use: [
+          { loader: "style-loader" },
+          { loader: "css-loader" }
+        ]
+      },
+      
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: "babel-loader"
+      },
+
+       {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: "babel-loader"
+      }
+    ]
+  }
 }
